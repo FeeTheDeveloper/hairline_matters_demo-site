@@ -140,11 +140,11 @@ test('walk-in: progress clamps above and below the section', () => {
   s.walkVideo.duration = 10;
   s.section.top = 500;
   s.win.listeners.scroll();
-  s.win.rafQueue.shift()();
+  while (s.win.rafQueue.length) s.win.rafQueue.shift()();
   assert.equal(s.walkVideo.currentTime, 0);
   s.section.top = -99999;
   s.win.listeners.scroll();
-  s.win.rafQueue.shift()();
+  while (s.win.rafQueue.length) s.win.rafQueue.shift()();
   assert.ok(Math.abs(s.walkVideo.currentTime - 9.95) < 0.01);
 });
 
@@ -218,6 +218,29 @@ test('walk-in: a failed fetch falls back to the normal video load', async () => 
   for (let i = 0; i < 5; i++) await Promise.resolve();
   assert.equal(s.walkVideo.loadCalls, 1);
   assert.equal(s.walkVideo.src, undefined);
+});
+
+test('walk-in: the video eases toward the scroll position instead of jumping', () => {
+  const s = setup();
+  s.walkVideo.duration = 20.05;
+  s.section.top = -0.5 * (s.section.height - s.win.innerHeight);
+  s.win.listeners.scroll();
+  s.win.rafQueue.shift()(); // render: sets the target, schedules the glide
+  s.win.rafQueue.shift()(); // first glide frame
+  assert.ok(s.walkVideo.currentTime > 0 && s.walkVideo.currentTime < 10, String(s.walkVideo.currentTime));
+  while (s.win.rafQueue.length) s.win.rafQueue.shift()();
+  assert.equal(s.walkVideo.currentTime, 10);
+});
+
+test('walk-in: no new seek is issued while the decoder is still seeking', () => {
+  const s = setup();
+  s.walkVideo.duration = 20.05;
+  s.walkVideo.seeking = true;
+  s.scrollTo(0.5);
+  assert.equal(s.walkVideo.currentTime, 0);
+  s.walkVideo.seeking = false;
+  s.walkVideo.listeners.seeked();
+  assert.equal(s.walkVideo.currentTime, 10);
 });
 
 // Work film band

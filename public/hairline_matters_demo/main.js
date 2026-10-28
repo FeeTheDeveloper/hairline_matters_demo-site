@@ -20,10 +20,42 @@
     return Math.min(1, Math.max(0, -rect.top / travel));
   }
 
+  // The video eases toward the scroll position instead of jumping with each wheel
+  // notch or flick, and never queues a seek while the decoder is still busy.
+  var target = 0;
+  var shown = 0;
+  var gliding = false;
+
+  function seek(t) {
+    if (video.seeking) return; // 'seeked' catches up to the latest position
+    if (Math.abs(video.currentTime - t) > 0.01) video.currentTime = t;
+  }
+
+  function glide() {
+    var diff = target - shown;
+    shown = Math.abs(diff) < 0.04 ? target : shown + diff * 0.25;
+    seek(shown);
+    if (shown !== target) {
+      window.requestAnimationFrame(glide);
+    } else {
+      gliding = false;
+    }
+  }
+
+  video.addEventListener('seeked', function () {
+    seek(shown);
+  });
+
   function render() {
     ticking = false;
     var p = progress();
-    if (video.duration) video.currentTime = p * (video.duration - 0.05);
+    if (video.duration) {
+      target = p * (video.duration - 0.05);
+      if (!gliding) {
+        gliding = true;
+        window.requestAnimationFrame(glide);
+      }
+    }
     for (var i = 0; i < chapters.length; i++) {
       var from = parseFloat(chapters[i].getAttribute('data-from'));
       var to = parseFloat(chapters[i].getAttribute('data-to'));
