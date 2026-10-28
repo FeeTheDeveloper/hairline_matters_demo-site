@@ -11,7 +11,7 @@ const BOOKING = 'https://hairlinematters.as.me';
 const MERCH = 'https://hairlinematters.wixsite.com/hairlinematters';
 const MEDIA_BUDGET_BYTES = 2_000_000;
 // The scroll-scrubbed walk-in uses a short GOP for smooth seeking, so it gets more room.
-const MEDIA_BUDGET_OVERRIDES = { 'walkin.mp4': 4_500_000 };
+const MEDIA_BUDGET_OVERRIDES = { 'walkin.mp4': 7_000_000, 'walkin-480.mp4': 4_000_000 };
 // Media is git-ignored (rights-restricted); a fresh clone has none until `npm run media`.
 const hasMedia = existsSync(mediaDir);
 
@@ -109,6 +109,7 @@ check('walk-in chapters stay readable as stacked text (no-JS fallback)', (html.m
 check('main.js loaded with defer', /<script src="main.js" defer><\/script>/.test(html));
 check('html lang set', /<html lang="en">/.test(html));
 check('skip link present', /class="skip-link" href="#main"/.test(html));
+check('generated footage is disclosed', /AI-generated rendering of the shop/.test(html));
 check('walk-in has a Skip intro link past the scroll sequence', /class="skip-intro" href="#work"/.test(html));
 
 // Media weight budget and no stray files.

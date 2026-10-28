@@ -9,7 +9,7 @@ OUT="$(dirname "$0")/../public/hairline_matters_demo/assets/media"
 mkdir -p "$OUT"
 PIC="crop=1216:684:70:116,scale=960:540:flags=lanczos,setsar=1"
 
-ffmpeg -v error -y -ss 8.85 -t 20.4 -i "$SRC" -an \
+ffmpeg -v error -y -ss 8.85 -t 10.5 -i "$SRC" -an \
   -vf "$PIC,fps=24,format=yuv420p" -c:v libx264 -preset slow -crf 28 -movflags +faststart "$OUT/work.mp4"
 ffmpeg -v error -y -ss 14 -i "$SRC" -frames:v 1 -vf "$PIC" -c:v libwebp -quality 72 "$OUT/work-poster.webp"
 
