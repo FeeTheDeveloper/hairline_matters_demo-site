@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Hairline Matters — Private Concept Demo</title>
+  <meta name="description" content="Private prospect concept for Hairline Matters. Not a live or approved website.">
+  <meta name="theme-color" content="#0b0d0c">
+  <link rel="preload" as="image" href="assets/media/walkin-poster.webp" type="image/webp" fetchpriority="high">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="concept-banner" role="note">
+    Private concept demo by Fee The Developer. Not affiliated with or endorsed by Hairline Matters.
+  </div>
+
+  <header class="site-header">
+    <a class="wordmark" href="#top">
+      <svg class="mark" viewBox="140 8 120 175" aria-hidden="true" focusable="false">
+        <path d="M147 14V176M253 14V176M147 14L200 150L253 14M147 97H253" fill="none" stroke="currentColor" stroke-width="9" stroke-linecap="square"/>
+      </svg>
+      <span class="wordmark-text">Hairline<span class="visually-hidden"> </span>Matters</span>
+    </a>
+    <nav aria-label="Primary">
+      <ul>
+        <li><a href="#chairs">Work</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#visit">Visit</a></li>
+        <li><a class="btn btn-small" href="https://hairlinematters.as.me" target="_blank" rel="noopener noreferrer">Book<span class="visually-hidden"> (opens in a new tab)</span></a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main">
+    <!-- Walk-in: a sticky stage scrubbed by scroll when JS and motion allow; otherwise a poster and stacked chapters. -->
+    <section class="walkin" id="top" aria-labelledby="walkin-title">
+      <div class="walkin-stage">
+        <div class="walkin-backdrop" aria-hidden="true"></div>
+        <a class="skip-intro" href="#work">Skip intro</a>
+        <figure class="walkin-media">
+          <video id="walkin-video" muted playsinline preload="none" controls
+                 poster="assets/media/walkin-poster.webp" width="640" height="800"
+                 aria-describedby="walkin-desc">
+            <source src="assets/media/walkin.mp4" type="video/mp4">
+          </video>
+          <figcaption id="walkin-desc" class="visually-hidden">
+            Silent walk-in: through the glass doors onto the shop floor, then finished cuts in the chair.
+          </figcaption>
+          <span class="study-tag">Concept footage, not final</span>
+        </figure>
+        <ol class="walkin-chapters" role="list">
+          <li class="chapter" data-from="0" data-to="0.26">
+            <p class="eyebrow">Hairline Matters</p>
+            <h1 id="walkin-title" class="display">Pull up.<br>Step in.</h1>
+          </li>
+          <li class="chapter" data-from="0.26" data-to="0.46">
+            <p class="display">Into<br>the chair.</p>
+          </li>
+          <li class="chapter" data-from="0.46" data-to="0.78">
+            <p class="display">Lines<br>that hold.</p>
+          </li>
+          <li class="chapter" data-from="0.78" data-to="1.01">
+            <p class="display">Book your<br>chair.</p>
+            <a class="btn" href="https://hairlinematters.as.me" target="_blank" rel="noopener noreferrer">Book appointment<span class="visually-hidden"> (opens in a new tab)</span></a>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="work" id="work" aria-labelledby="work-title">
+      <video id="work-video" muted playsinline loop preload="none" controls
+             poster="assets/media/work-poster.webp" width="960" height="540"
+             aria-describedby="work-desc">
+        <source src="assets/media/work.mp4" type="video/mp4">
+      </video>
+      <div class="work-copy">
+        <p class="eyebrow">At work</p>
+        <h2 id="work-title" class="display">Hands steady.<br><span class="accent">Eyes on the line.</span></h2>
+        <p id="work-desc" class="work-desc">Silent film from the shop: clippers, trimmers and a straight edge working a fade and lineup, start to finish.</p>
+      </div>
+      <button class="video-toggle" type="button" id="work-toggle" hidden>
+        <span class="video-toggle-label">Play film</span>
+      </button>
+    </section>
+
+    <section class="section section-light" id="experience" aria-labelledby="experience-title">
+      <div class="split">
+        <div>
+          <p class="eyebrow">Why we do it</p>
+          <h2 id="experience-title" class="display">More than a cut.<br><span class="accent">It's the line.</span></h2>
+          <p class="lede">Fades, waves, locs and lineups, done right and done clean. Every seat gets the same detail.</p>
+          <p class="pending-note">Shop story and numbers (years open, cuts done) go here once the owner confirms them.</p>
+        </div>
+        <img class="split-img" src="assets/media/work-chair.webp" width="1216" height="684" loading="lazy" decoding="async"
+             alt="A barber in a black tee fastens the cape on a seated client before the cut.">
+      </div>
+    </section>
+
+    <section class="section" id="services" aria-labelledby="services-title">
+      <p class="eyebrow">Services</p>
+      <h2 id="services-title" class="display">Menu &amp; pricing</h2>
+      <p class="pending-note">Services and prices are confirmed on the booking page. This menu fills in after the owner validates the current price list.</p>
+      <a class="btn" href="https://hairlinematters.as.me" target="_blank" rel="noopener noreferrer">View services &amp; book<span class="visually-hidden"> (opens in a new tab)</span></a>
+    </section>
+
+    <section class="section section-alt" id="chairs" aria-labelledby="chairs-title">
+      <p class="eyebrow">Recent cuts</p>
+      <h2 id="chairs-title" class="display">Fresh out <span class="accent">the chair.</span></h2>
+      <p class="lede">Real client cuts from the shop's own posts. Scroll the roll.</p>
+      <ul class="roll" role="list" tabindex="0" aria-label="Recent cuts, scrolls sideways">
+        <li class="cut">
+          <img src="assets/media/cut-locs-lineup-480.webp" srcset="assets/media/cut-locs-lineup-480.webp 480w, assets/media/cut-locs-lineup-960.webp 960w"
+               sizes="(min-width: 720px) 300px, 70vw" width="480" height="600" loading="lazy" decoding="async"
+               alt="Side view of a client with tied-back locs, a sharp squared-off hairline, faded sides and a full shaped beard.">
+          <span>Locs &amp; lineup</span>
+        </li>
+        <li class="cut">
+          <img src="assets/media/cut-twists-taper-480.webp" srcset="assets/media/cut-twists-taper-480.webp 480w, assets/media/cut-twists-taper-960.webp 960w"
+               sizes="(min-width: 720px) 300px, 70vw" width="480" height="600" loading="lazy" decoding="async"
+               alt="Freeform twists gathered up on top over a clean taper and a crisp edge-up at the temple.">
+          <span>Twists &amp; taper</span>
+        </li>
+        <li class="cut">
+          <img src="assets/media/cut-waves-front-480.webp" srcset="assets/media/cut-waves-front-480.webp 480w, assets/media/cut-waves-front-960.webp 960w"
+               sizes="(min-width: 720px) 300px, 70vw" width="480" height="600" loading="lazy" decoding="async"
+               alt="Three-quarter view of 360 waves with a low skin fade and a sharp lineup, client seated in the shop.">
+          <span>Waves &amp; fade</span>
+        </li>
+        <li class="cut">
+          <img src="assets/media/cut-waves-profile-480.webp" srcset="assets/media/cut-waves-profile-480.webp 480w, assets/media/cut-waves-profile-960.webp 960w"
+               sizes="(min-width: 720px) 300px, 70vw" width="480" height="600" loading="lazy" decoding="async"
+               alt="Profile of the same waves cut showing the fade blending into the wave pattern and a clean temple edge.">
+          <span>Waves, side profile</span>
+        </li>
+        <li class="cut">
+          <img src="assets/media/cut-curly-taper-front-480.webp" srcset="assets/media/cut-curly-taper-front-480.webp 480w, assets/media/cut-curly-taper-front-960.webp 960w"
+               sizes="(min-width: 720px) 300px, 70vw" width="480" height="600" loading="lazy" decoding="async"
+               alt="Natural curly top with a tapered fade and a shaped beard, client looking down.">
+          <span>Curly top &amp; taper</span>
+        </li>
+        <li class="cut">
+          <img src="assets/media/cut-curly-taper-profile-480.webp" srcset="assets/media/cut-curly-taper-profile-480.webp 480w, assets/media/cut-curly-taper-profile-960.webp 960w"
+               sizes="(min-width: 720px) 300px, 70vw" width="480" height="600" loading="lazy" decoding="async"
+               alt="Profile of the curly taper showing the fade around the ear and a clean neckline.">
+          <span>Curly taper, profile</span>
+        </li>
+      </ul>
+      <p class="pending-note">Photos are lightly cleaned up and sharpened; the cuts themselves are untouched.</p>
+    </section>
+
+    <section class="section" id="space" aria-labelledby="space-title">
+      <p class="eyebrow">The space</p>
+      <h2 id="space-title" class="display">Tile, chrome, <span class="accent">light.</span></h2>
+      <p class="lede">Glass doors, white tile, lit mirrors. Walk in and you're already in the chair.</p>
+      <div class="space-grid">
+        <img src="assets/media/interior-study.webp" width="640" height="728" loading="lazy" decoding="async"
+             alt="Inside the shop entrance: a customer walks in through the glass doors past a dark entrance mat, white square floor tiles, and a barber pole on the wall.">
+        <img src="assets/media/space-stations.webp" width="960" height="602" loading="lazy" decoding="async"
+             alt="Barber stations with lit mirrors and black chairs along a dark wall.">
+      </div>
+    </section>
+
+    <section class="section section-alt" id="policies" aria-labelledby="policies-title">
+      <p class="eyebrow">Policies</p>
+      <h2 id="policies-title" class="display">Before you book</h2>
+      <p class="pending-note">Late, cancellation, and no-show policies, plus answers to common questions, will appear here word-for-word from the owner.</p>
+    </section>
+
+    <section class="section section-light merch" id="merch" aria-labelledby="merch-title">
+      <figure class="tee">
+        <svg viewBox="0 0 400 420" role="img" aria-labelledby="tee-alt">
+          <title id="tee-alt">Black crew-neck t-shirt with the HAIRLINEMATTERS wordmark printed small across the chest.</title>
+          <defs>
+            <linearGradient id="tee-shade" x1="0" x2="1">
+              <stop offset="0" stop-color="#000" stop-opacity="0.35"/>
+              <stop offset="0.5" stop-color="#000" stop-opacity="0"/>
+              <stop offset="1" stop-color="#000" stop-opacity="0.35"/>
+            </linearGradient>
+          </defs>
+          <path d="M148 22c14 16 34 24 52 24s38-8 52-24l78 30 58 74-56 42-30-30v268H98V138l-30 30-56-42 58-74z" fill="#111"/>
+          <path d="M148 22c14 16 34 24 52 24s38-8 52-24l78 30 58 74-56 42-30-30v268H98V138l-30 30-56-42 58-74z" fill="url(#tee-shade)"/>
+          <path d="M148 22c14 16 34 24 52 24s38-8 52-24" fill="none" stroke="#2a2a2a" stroke-width="8"/>
+          <text x="200" y="124" fill="#e9ecea" font-family="Century Gothic, Futura, 'Avenir Next', Montserrat, sans-serif" font-size="15" font-weight="500" letter-spacing="1" text-anchor="middle">HAIRLINEMATTERS</text>
+        </svg>
+      </figure>
+      <div>
+        <p class="eyebrow">Merch</p>
+        <h2 id="merch-title" class="display">Wear <span class="accent">the line.</span></h2>
+        <p class="lede">The #HairlineMatters tee. Black, clean, wordmark on the chest.</p>
+        <a class="btn btn-dark" href="https://hairlinematters.wixsite.com/hairlinematters" target="_blank" rel="noopener noreferrer">Get the tee on the current site<span class="visually-hidden"> (opens in a new tab)</span></a>
+        <p class="pending-note">Mockup drawn from the shop's tee. Price, sizes and checkout stay on the shop's current site until the owner picks a store.</p>
+      </div>
+    </section>
+
+    <section class="section visit" id="visit" aria-labelledby="visit-title">
+      <div>
+        <p class="eyebrow">Visit</p>
+        <h2 id="visit-title" class="display">Find the shop</h2>
+        <dl class="details">
+          <dt>Address</dt>
+          <dd class="pending-inline">Published after the owner verifies it</dd>
+          <dt>Hours</dt>
+          <dd class="pending-inline">Published after the owner verifies them</dd>
+          <dt>Instagram</dt>
+          <dd><a href="https://www.instagram.com/hairlinematters/" target="_blank" rel="noopener noreferrer">@hairlinematters<span class="visually-hidden"> (opens in a new tab)</span></a></dd>
+        </dl>
+      </div>
+      <div class="final-cta">
+        <p class="display">Your chair<br><span class="accent">is waiting.</span></p>
+        <a class="btn" href="https://hairlinematters.as.me" target="_blank" rel="noopener noreferrer">Book appointment<span class="visually-hidden"> (opens in a new tab)</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <img class="footer-logo" src="assets/brand/hm-logo.svg" width="200" height="115" loading="lazy" alt="Hairline Matters">
+    <p>Private concept presentation prepared by Fee The Developer for discussion with Hairline Matters. Not a live website. No affiliation or endorsement is claimed.</p>
+    <p>Booking is handled by the shop's existing scheduling page.</p>
+  </footer>
+
+  <script src="main.js" defer></script>
+</body>
+</html>

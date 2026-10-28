@@ -1,0 +1,12 @@
+/hairline_matters_demo/*
+  X-Robots-Tag: noindex, nofollow
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  X-Frame-Options: DENY
+  Content-Security-Policy: default-src 'self'; img-src 'self'; media-src 'self'; style-src 'self'; script-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'none'
+
+# Filenames are not fingerprinted and the footage is not yet cleared, so media
+# must stop serving quickly if it is replaced or withdrawn.
+/hairline_matters_demo/assets/*
+  Cache-Control: no-store

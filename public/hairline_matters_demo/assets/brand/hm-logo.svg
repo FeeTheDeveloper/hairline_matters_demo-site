@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 230" role="img" aria-label="Hairline Matters">
+  <!-- Vector redraw of the Hairline Matters HM monogram and wordmark (from the shop's site). -->
+  <rect width="400" height="230" fill="#000"/>
+  <g fill="none" stroke="#fff" stroke-width="7" stroke-linecap="square">
+    <path d="M147 14V176M253 14V176M147 14L200 150L253 14M147 97H253"/>
+  </g>
+  <text x="200" y="212" fill="#fff" font-family="Century Gothic, Futura, 'Avenir Next', Montserrat, sans-serif" font-size="24" font-weight="500" letter-spacing="1.2" text-anchor="middle">HAIRLINEMATTERS</text>
+</svg>

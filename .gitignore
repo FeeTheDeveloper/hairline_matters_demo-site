@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.wrangler/
+*.log
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Rights-restricted footage: the origin repo is public. Media is rebuilt with
+# `npm run media` or shipped in the private handoff ZIP until the ledger clears.
+public/hairline_matters_demo/assets/media/

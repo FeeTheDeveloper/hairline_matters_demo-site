@@ -1,0 +1,16 @@
+{
+  "name": "hairline-matters-demo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Private prospect concept for Hairline Matters. Static site, no dependencies.",
+  "type": "module",
+  "scripts": {
+    "test": "node scripts/check.mjs && node --test scripts/main.test.mjs",
+    "deploy": "npx wrangler@4 deploy",
+    "serve": "node scripts/serve.mjs",
+    "package": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/package.ps1"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

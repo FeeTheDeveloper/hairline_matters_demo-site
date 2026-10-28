@@ -1,0 +1,18 @@
+{
+  // Static assets only; no Worker script. Deploying requires King Fee's approval
+  // and a cleared asset rights ledger (docs/ASSET_RIGHTS_LEDGER.md).
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "hairline-matters-demo",
+  "compatibility_date": "2026-10-28",
+  // Served at https://ftdsitepreviews.com/hairline_matters_demo/ — assets live under
+  // public/hairline_matters_demo/ because asset matching uses the full request path.
+  "routes": [
+    { "pattern": "ftdsitepreviews.com/hairline_matters_demo*", "zone_name": "ftdsitepreviews.com" }
+  ],
+  "assets": {
+    "directory": "./public",
+    "not_found_handling": "404-page"
+  },
+  "workers_dev": false,
+  "preview_urls": false
+}

@@ -1,0 +1,230 @@
+// Runtime behaviour of main.js against a hand-rolled DOM stub. Zero dependencies: `node --test scripts/`.
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import vm from 'node:vm';
+
+const src = readFileSync(new URL('../public/hairline_matters_demo/main.js', import.meta.url), 'utf8');
+
+function classList() {
+  const set = new Set();
+  return { add: (c) => set.add(c), remove: (c) => set.delete(c), contains: (c) => set.has(c) };
+}
+
+function makeVideo() {
+  const attrs = { controls: '' };
+  const listeners = {};
+  return {
+    attrs,
+    listeners,
+    paused: true,
+    muted: false,
+    preload: 'none',
+    duration: 0,
+    currentTime: 0,
+    playCalls: 0,
+    loadCalls: 0,
+    removeAttribute: (n) => delete attrs[n],
+    setAttribute: (n, v) => (attrs[n] = v),
+    addEventListener: (e, f) => (listeners[e] = f),
+    load() {
+      this.loadCalls++;
+    },
+    play() {
+      this.playCalls++;
+      if (this.rejectPlay) return Promise.reject(new Error('blocked'));
+      this.paused = false;
+      this.listeners.play?.();
+      return Promise.resolve();
+    },
+    pause() {
+      this.paused = true;
+      this.listeners.pause?.();
+    },
+  };
+}
+
+function setup({ reduce = false, saveData = false, intersection = true, rejectPlay = false } = {}) {
+  const win = { listeners: {}, innerHeight: 1000, rafQueue: [] };
+  win.addEventListener = (e, f) => (win.listeners[e] = f);
+  win.removeEventListener = (e) => delete win.listeners[e];
+  win.requestAnimationFrame = (f) => win.rafQueue.push(f);
+  const mq = { matches: reduce, handlers: [], addEventListener: (e, f) => mq.handlers.push(f) };
+  mq.change = (ev) => mq.handlers.forEach((f) => f(ev));
+  win.matchMedia = () => mq;
+  let observerCb = null;
+  if (intersection) {
+    win.IntersectionObserver = function (cb) {
+      observerCb = cb;
+      this.observe = () => {};
+    };
+  }
+
+  const root = { classList: classList() };
+  const walkVideo = makeVideo();
+  const workVideo = makeVideo();
+  workVideo.rejectPlay = rejectPlay;
+  const chapters = [
+    [0, 0.21],
+    [0.21, 0.42],
+    [0.42, 0.57],
+    [0.57, 0.83],
+    [0.83, 1.01],
+  ].map(([from, to]) => ({
+    classList: classList(),
+    getAttribute: (n) => String(n === 'data-from' ? from : to),
+  }));
+  const section = {
+    top: 0,
+    height: 5000,
+    getBoundingClientRect() {
+      return { top: this.top, height: this.height };
+    },
+    querySelectorAll: () => chapters,
+  };
+  const label = { textContent: 'Play film' };
+  const toggle = { hidden: true, listeners: {}, querySelector: () => label, addEventListener: (e, f) => (toggle.listeners[e] = f) };
+
+  const ctx = {
+    window: win,
+    navigator: { connection: saveData ? { saveData: true } : undefined },
+    document: {
+      documentElement: root,
+      querySelector: (s) => (s === '.walkin' ? section : null),
+      getElementById: (id) => ({ 'walkin-video': walkVideo, 'work-video': workVideo, 'work-toggle': toggle })[id] || null,
+    },
+  };
+  Object.assign(ctx, { IntersectionObserver: win.IntersectionObserver });
+  vm.runInNewContext(src, ctx);
+
+  function scrollTo(p) {
+    section.top = -p * (section.height - win.innerHeight);
+    win.listeners.scroll?.();
+    while (win.rafQueue.length) win.rafQueue.shift()();
+  }
+  const activeIndex = () => chapters.findIndex((c) => c.classList.contains('is-active'));
+  return { root, walkVideo, workVideo, chapters, section, toggle, label, mq, win, scrollTo, activeIndex, see: (v) => observerCb?.([{ isIntersecting: v }]) };
+}
+
+// Walk-in scroll scrub
+
+test('walk-in: motion allowed enables scrub mode and loads the video', () => {
+  const s = setup();
+  assert.equal(s.root.classList.contains('scrub'), true);
+  assert.equal('controls' in s.walkVideo.attrs, false);
+  assert.equal(s.walkVideo.preload, 'auto');
+  assert.equal(s.walkVideo.loadCalls, 1);
+});
+
+test('walk-in: scroll progress seeks the video and activates the matching chapter', () => {
+  const s = setup();
+  s.walkVideo.duration = 28.8;
+  s.scrollTo(0.5);
+  assert.ok(Math.abs(s.walkVideo.currentTime - 0.5 * (28.8 - 0.05)) < 0.01);
+  assert.equal(s.activeIndex(), 2);
+  s.scrollTo(0.9);
+  assert.equal(s.activeIndex(), 4);
+  assert.equal(s.chapters.filter((c) => c.classList.contains('is-active')).length, 1);
+});
+
+test('walk-in: progress clamps above and below the section', () => {
+  const s = setup();
+  s.walkVideo.duration = 10;
+  s.section.top = 500;
+  s.win.listeners.scroll();
+  s.win.rafQueue.shift()();
+  assert.equal(s.walkVideo.currentTime, 0);
+  s.section.top = -99999;
+  s.win.listeners.scroll();
+  s.win.rafQueue.shift()();
+  assert.ok(Math.abs(s.walkVideo.currentTime - 9.95) < 0.01);
+});
+
+test('walk-in: reduced motion keeps stacked text, native controls and no preload', () => {
+  const s = setup({ reduce: true });
+  assert.equal(s.root.classList.contains('scrub'), false);
+  assert.equal('controls' in s.walkVideo.attrs, true);
+  assert.equal(s.walkVideo.preload, 'none');
+  assert.equal(s.win.listeners.scroll, undefined);
+});
+
+test('walk-in: Save-Data keeps the poster only', () => {
+  const s = setup({ saveData: true });
+  assert.equal(s.root.classList.contains('scrub'), false);
+  assert.equal(s.walkVideo.loadCalls, 0);
+});
+
+test('walk-in: switching to reduced motion mid-session turns scrub off', () => {
+  const s = setup();
+  s.walkVideo.duration = 10;
+  s.scrollTo(0.5);
+  s.mq.change({ matches: true });
+  assert.equal(s.root.classList.contains('scrub'), false);
+  assert.equal('controls' in s.walkVideo.attrs, true);
+  assert.equal(s.activeIndex(), -1);
+  assert.equal(s.win.listeners.scroll, undefined);
+});
+
+// Work film band
+
+test('work film: JS removes native controls and reveals the toggle', () => {
+  const s = setup();
+  assert.equal('controls' in s.workVideo.attrs, false);
+  assert.equal(s.toggle.hidden, false);
+  assert.equal(s.workVideo.muted, true);
+  assert.equal(s.label.textContent, 'Play film');
+});
+
+test('work film: plays only while on screen, pauses when scrolled away', () => {
+  const s = setup();
+  s.see(true);
+  assert.equal(s.workVideo.playCalls, 1);
+  assert.equal(s.label.textContent, 'Pause film');
+  s.see(false);
+  assert.equal(s.workVideo.paused, true);
+  assert.equal(s.label.textContent, 'Play film');
+});
+
+test('work film: a user pause sticks when it scrolls back into view', () => {
+  const s = setup();
+  s.see(true);
+  s.toggle.listeners.click();
+  assert.equal(s.workVideo.paused, true);
+  s.see(false);
+  s.see(true);
+  assert.equal(s.workVideo.playCalls, 1);
+});
+
+test('work film: reduced motion never autoplays, but the toggle still plays it', () => {
+  const s = setup({ reduce: true });
+  s.see(true);
+  assert.equal(s.workVideo.playCalls, 0);
+  s.toggle.listeners.click();
+  assert.equal(s.workVideo.playCalls, 1);
+  assert.equal(s.label.textContent, 'Pause film');
+});
+
+test('work film: rejected play leaves the label on "Play film"', async () => {
+  const s = setup({ rejectPlay: true });
+  s.see(true);
+  await Promise.resolve();
+  await Promise.resolve();
+  assert.equal(s.label.textContent, 'Play film');
+});
+
+test('no IntersectionObserver: no autoplay, toggle still works', () => {
+  const s = setup({ intersection: false });
+  assert.equal(s.workVideo.playCalls, 0);
+  s.toggle.listeners.click();
+  assert.equal(s.workVideo.playCalls, 1);
+});
+
+test('missing elements: exits without throwing', () => {
+  assert.doesNotThrow(() =>
+    vm.runInNewContext(src, {
+      window: { matchMedia: () => ({ matches: false }) },
+      navigator: {},
+      document: { querySelector: () => null, getElementById: () => null, documentElement: {} },
+    }),
+  );
+});
