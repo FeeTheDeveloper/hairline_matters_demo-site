@@ -72,12 +72,33 @@
       });
   }
 
+  // iOS Safari will not paint seeked frames of a video that has never played.
+  // A muted play-then-pause primes it; retry on the first touch if autoplay was refused.
+  var primed = false;
+  function prime() {
+    if (primed) return;
+    var p = video.play();
+    if (p && p.then) {
+      p.then(function () {
+        primed = true;
+        video.pause();
+        render();
+      }).catch(function () {});
+    } else {
+      primed = true;
+      video.pause();
+    }
+  }
+
   function enable() {
     root.classList.add('scrub');
     video.removeAttribute('controls');
+    video.muted = true;
     video.preload = 'auto';
     loadSeekable();
     video.addEventListener('loadedmetadata', render);
+    video.addEventListener('loadeddata', prime);
+    window.addEventListener('touchstart', prime, { passive: true });
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll);
     render();
@@ -88,6 +109,7 @@
     video.setAttribute('controls', '');
     window.removeEventListener('scroll', onScroll);
     window.removeEventListener('resize', onScroll);
+    window.removeEventListener('touchstart', prime);
     if (active >= 0) chapters[active].classList.remove('is-active');
     active = -1;
   }

@@ -189,6 +189,30 @@ test('walk-in: narrow screens fetch the 480p clip', async () => {
   assert.deepEqual(urls, ['assets/media/walkin-480.mp4']);
 });
 
+test('walk-in: primes the video (muted play, then pause) once data loads, for iOS frame painting', async () => {
+  const s = setup();
+  assert.equal(s.walkVideo.muted, true);
+  s.walkVideo.listeners.loadeddata();
+  await Promise.resolve();
+  await Promise.resolve();
+  assert.equal(s.walkVideo.playCalls, 1);
+  assert.equal(s.walkVideo.paused, true);
+});
+
+test('walk-in: if autoplay is refused, the first touch primes it instead', async () => {
+  const s = setup();
+  s.walkVideo.rejectPlay = true;
+  s.walkVideo.listeners.loadeddata();
+  await Promise.resolve();
+  await Promise.resolve();
+  s.walkVideo.rejectPlay = false;
+  s.win.listeners.touchstart();
+  await Promise.resolve();
+  await Promise.resolve();
+  assert.equal(s.walkVideo.playCalls, 2);
+  assert.equal(s.walkVideo.paused, true);
+});
+
 test('walk-in: a failed fetch falls back to the normal video load', async () => {
   const s = setup({ fetchImpl: () => Promise.resolve({ ok: false, status: 404 }) });
   for (let i = 0; i < 5; i++) await Promise.resolve();

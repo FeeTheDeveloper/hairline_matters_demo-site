@@ -208,7 +208,13 @@ h2.display { font-size: clamp(2.2rem, 6vw, 4.5rem); }
 
 /* Scroll-scrub mode (JS on, motion allowed). */
 .scrub .walkin { height: 440vh; }
-.scrub .walkin-stage { position: sticky; top: var(--header-h); height: calc(100vh - var(--header-h)); height: calc(100svh - var(--header-h)); }
+.scrub .walkin-stage {
+  position: sticky;
+  top: var(--header-h);
+  min-height: 0; /* the base min-height would push the sticky stage past the screen */
+  height: calc(100vh - var(--header-h));
+  height: calc(100svh - var(--header-h));
+}
 .scrub .walkin-chapters { min-height: 22rem; }
 .scrub .chapter {
   position: absolute;
@@ -364,7 +370,7 @@ section[id] { scroll-margin-top: 84px; }
   border-radius: var(--radius);
   background: radial-gradient(circle at 50% 40%, #d9dcda, #b9bdbb);
 }
-.tee svg { display: block; width: 100%; max-width: 420px; margin-inline: auto; filter: drop-shadow(0 24px 30px rgb(0 0 0 / 0.35)); }
+.tee svg { display: block; width: 100%; max-width: 420px; margin-inline: auto; }
 .btn-dark { background: #0b0d0c; border-color: #0b0d0c; color: #fff; }
 .merch .pending-note { margin-top: 20px; }
 
@@ -389,3 +395,19 @@ section[id] { scroll-margin-top: 84px; }
 /* Only needed when the walk-in is a long scroll. */
 .scrub .skip-intro { display: inline-flex; align-items: center; }
 .skip-intro:hover { background: rgb(0 0 0 / 0.8); }
+
+/* Phones: stack the film above its copy so text never sits on bright footage. */
+@media (max-width: 699px) {
+  .work { display: block; min-height: 0; }
+  .work video { display: block; height: auto; aspect-ratio: 16 / 9; opacity: 1; }
+  .work-copy {
+    padding: 32px var(--gutter) 48px;
+    background: #000;
+    text-shadow: none;
+  }
+  .video-toggle { top: 12px; }
+}
+
+/* Without the scroll sequence (no JS, reduced motion, Save-Data), keep only the
+   opening line and the call to action; the middle beats only make sense in motion. */
+html:not(.scrub) .chapter:not(:first-child):not(:last-child) { display: none; }
