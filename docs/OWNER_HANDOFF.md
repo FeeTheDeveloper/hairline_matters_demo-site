@@ -2,13 +2,13 @@
 
 **For:** King Fee, then the Hairline Matters owner during the pitch.
 **Status:** private concept, not for redistribution. Not approved by the shop.
-**URL:** `https://ftdsitepreviews.com/hairline_matters_demo/` (noindex; anyone with the link can view it). The opening is an AI-generated night walk-in of the shop, built from its own photos and disclosed in the footer.
+**URL:** `https://ftdsitepreviews.com/hairline_matters_demo/` (noindex; anyone with the link can view it). The opening is a night re-render of the shop's own walk-in video, disclosed in the footer.
 
 ## What the shop gets
 
 Modeled on the Oct 27 reference site, built from Hairline Matters' own material:
 
-1. **Opening (scroll-driven, full screen):** a cinematic night walk-in, modeled on the reference. Scrolling crosses the parking lot, passes through the glass door, sweeps the bulb-lit stations, then cuts to the shop's real film of a lineup. Headlines change with each beat and end on "Book your chair." A Skip intro button is always available. With reduced motion turned on, it falls back to a still and stacked text.
+1. **Opening (scroll-driven, full screen):** the shop's real walk-in (along the storefront, through the FADED door, onto the floor with barbers working), re-rendered as a cinematic night shot and widened to fill the screen, then the shop's film of a lineup. Headlines change with each beat and end on "Book your chair." A Skip intro button is always available. With reduced motion turned on, it falls back to a still and a short headline.
 2. **At work:** full-width loop of the shop's own black-and-white film. It plays only while on screen and has a pause button.
 3. **More than a cut:** short shop story, with a still from the film.
 4. **Services:** links to the real booking page until prices are validated.
@@ -21,7 +21,7 @@ The HM monogram is redrawn as a crisp vector for the header and footer.
 
 1. **Location:** exact address and suite. Sources disagree (Duncanville vs. Lancaster), so neither is published.
 2. **Signage:** the storefront and mat read "FADED". Confirm how that relates to Hairline Matters.
-3. **Opening look:** approved by King Fee on 2026-10-28. The shop can still swap in a real night walk-in (5–10 s on a phone) whenever it likes.
+3. **Opening look:** night re-render approved by King Fee on 2026-10-28. Built from the walk-in video the shop supplied.
 4. **Client consent:** confirmed by King Fee on 2026-10-28 for the six portfolio cuts and the film. The child client clip stays excluded.
 5. **Services and prices**, **policies**, **hours and contact**.
 6. **Shop story and numbers** (years open, etc.) for "More than a cut".

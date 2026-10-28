@@ -11,18 +11,18 @@ Brand: Hairline Matters only. Reference: Oct 27 screen recording of a scroll-dri
 | S3 | `Screen Recording 2026-10-28 093435.mp4` | 1390x830, 51 s. Shop film off the Wix player; picture area 1216x684 at (70,116) from 6 s on. |
 | S4 | Screenshots 093714 / 093727 | HM logo, tee promo ("Purchase your #HairlineMatters t-shirt today!"). |
 
-## Opening (scroll-scrubbed, 16:9, ~21 s, `scripts/process-walkin.sh`)
+## Opening (scroll-scrubbed, 16.8 s, `scripts/process-walkin.sh`)
 
-Modeled on the reference's full-bleed night arrival. Generated in Runway from two real frames (S1 entrance at 7.2 s, S2 interior at 20.2 s):
+Source S5: the owner's real walk-in (`30734990-video.MOV`, 9.2 s, 360x480 portrait). Pipeline: upscale to 810x1080 -> Runway expand to 16:9 (1920x1078) -> Runway video-to-video night re-render (1920x1080, 9 s). Desktop gets the 16:9 cut; phones get an 810x1080 center crop of the same render.
 
 | Beat | Scroll | Source | Headline |
 |---|---|---|---|
-| ARRIVE → THRESHOLD | 0–0.38 | Generated 8 s: night parking lot, dolly through the glass door into the shop | Pull up. Step in. |
-| WELCOME | 0.38–0.62 | Generated 5 s: interior push toward the bulb mirrors | Where the line gets drawn. |
-| DISCOVER | 0.62–0.82 | S3 19.4–27.2 s (real lineup/edge work) | Hands steady. |
-| ACT | 0.82–1 | S3, same segment, continued | Book your chair. + CTA |
+| ARRIVE | 0–0.30 | Night re-render: sidewalk along the storefronts to the door | Pull up. Step in. |
+| THRESHOLD / WELCOME | 0.30–0.54 | Night re-render: door pull, FADED mat, onto the floor with barbers working | Where the line gets drawn. |
+| DISCOVER | 0.54–0.80 | S3 19.4–27.2 s (real lineup/edge work) | Hands steady. |
+| ACT | 0.80–1 | S3, continued | Book your chair. + CTA |
 
-Keyframes: night exterior (strip-center glass storefront, barber pole, bulb mirrors visible inside), interior wide (bulb mirrors, blue stations, black chairs, white tile with border, mat). Prompts forbid people and generated text. Encoding: H.264, GOP 6, 1280x720 and 854x480 (mobile). Text stays in HTML.
+Known flaw: the re-render morphs window lettering ("FADED" briefly reads "FAJEE"). A cleanup pass (Aleph edit to blank the decals) is possible. Text stays in HTML.
 
 ## Film band (`scripts/process-work.sh`)
 

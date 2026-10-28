@@ -110,7 +110,7 @@ check('walk-in chapters stay readable as stacked text (no-JS fallback)', (html.m
 check('main.js loaded with defer', /<script src="main.js" defer><\/script>/.test(html));
 check('html lang set', /<html lang="en">/.test(html));
 check('skip link present', /class="skip-link" href="#main"/.test(html));
-check('generated footage is disclosed', /AI-generated rendering of the shop/.test(html));
+check('AI re-render of the walk-in is disclosed', /AI re-render of real walk-in footage/.test(html));
 check('walk-in has a Skip intro link past the scroll sequence', /class="skip-intro" href="#work"/.test(html));
 
 // Media weight budget and no stray files.
