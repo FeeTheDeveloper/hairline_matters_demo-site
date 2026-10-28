@@ -1,7 +1,9 @@
 #!/usr/bin/env sh
 # Builds the scroll-scrubbed opening (silent).
 # Source chain: the owner's real walk-in (portrait MOV) -> Runway expand to 16:9 ->
-# Runway video-to-video night re-render (walk-night-16x9.mp4), then the shop's film.
+# Runway video-to-video night re-render -> Runway decal cleanup -> local frosted blur on the
+# door-glass band at 2.35-4.95 s where lettering still warped (walk-night-16x9.mp4),
+# then the shop's film.
 #   Desktop (16:9): the night walk-in, then the film.
 #   Phones   (3:4): center crop of the same night walk-in, then the film center-cropped.
 # Both cuts share segment lengths, so the chapter timings match.

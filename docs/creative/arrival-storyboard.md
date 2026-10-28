@@ -22,7 +22,7 @@ Source S5: the owner's real walk-in (`30734990-video.MOV`, 9.2 s, 360x480 portra
 | DISCOVER | 0.54–0.80 | S3 19.4–27.2 s (real lineup/edge work) | Hands steady. |
 | ACT | 0.80–1 | S3, continued | Book your chair. + CTA |
 
-Known flaw: the re-render morphs window lettering ("FADED" briefly reads "FAJEE"). A cleanup pass (Aleph edit to blank the decals) is possible. Text stays in HTML.
+Lettering cleanup: a Runway edit blanked the window decals. Leftover warped text on the door glass (2.35–4.95 s) is covered by a feathered frosted blur on the top band. Text stays in HTML.
 
 ## Film band (`scripts/process-work.sh`)
 
