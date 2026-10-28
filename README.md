@@ -65,4 +65,6 @@ npx wrangler@4 deploy --dry-run   # validate
 npx wrangler@4 deploy
 ```
 
-`workers_dev` and preview URLs are off, so the only address is the `ftdsitepreviews.com` route. noindex is not access control. Until the ledger clears, put the path behind Cloudflare Access. Rollback: [docs/ROLLBACK.md](docs/ROLLBACK.md).
+`workers_dev` and preview URLs are off, so the only address is the `ftdsitepreviews.com` route. noindex is not access control. Rollback: [docs/ROLLBACK.md](docs/ROLLBACK.md).
+
+DNS: `ftdsitepreviews.com` is a demo-only zone. Its only record is a proxied `AAAA @ 100::` placeholder, which lets the Worker route fire. There is no mail, auth or root site on it by design, so `/` returns 522. Never set that record to DNS-only.
