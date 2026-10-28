@@ -22,7 +22,7 @@ The HM monogram is redrawn as a crisp vector for the header and footer.
 1. **Location:** exact address and suite. Sources disagree (Duncanville vs. Lancaster), so neither is published.
 2. **Signage:** the storefront and mat read "FADED". Confirm how that relates to Hairline Matters.
 3. **Opening look:** approved by King Fee on 2026-10-28. The shop can still swap in a real night walk-in (5–10 s on a phone) whenever it likes.
-4. **Client consent:** confirm the clients in the six portfolio cuts and the walk-in clips agreed to appear.
+4. **Client consent:** confirmed by King Fee on 2026-10-28 for the six portfolio cuts and the film. The child client clip stays excluded.
 5. **Services and prices**, **policies**, **hours and contact**.
 6. **Shop story and numbers** (years open, etc.) for "More than a cut".
 7. **Brand:** the original logo file and font, and the exact green (or approve `#2fd47a`).
