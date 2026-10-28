@@ -26,6 +26,10 @@ function makeVideo() {
     loadCalls: 0,
     removeAttribute: (n) => delete attrs[n],
     setAttribute: (n, v) => (attrs[n] = v),
+    querySelectorAll: () => [
+      { getAttribute: (n) => ({ media: '(max-width: 700px)', src: 'assets/media/walkin-480.mp4' })[n] ?? null },
+      { getAttribute: (n) => ({ src: 'assets/media/walkin.mp4' })[n] ?? null },
+    ],
     addEventListener: (e, f) => (listeners[e] = f),
     load() {
       this.loadCalls++;
@@ -44,14 +48,18 @@ function makeVideo() {
   };
 }
 
-function setup({ reduce = false, saveData = false, intersection = true, rejectPlay = false } = {}) {
+function setup({ reduce = false, saveData = false, intersection = true, rejectPlay = false, fetchImpl = null, narrow = false } = {}) {
   const win = { listeners: {}, innerHeight: 1000, rafQueue: [] };
   win.addEventListener = (e, f) => (win.listeners[e] = f);
   win.removeEventListener = (e) => delete win.listeners[e];
   win.requestAnimationFrame = (f) => win.rafQueue.push(f);
   const mq = { matches: reduce, handlers: [], addEventListener: (e, f) => mq.handlers.push(f) };
   mq.change = (ev) => mq.handlers.forEach((f) => f(ev));
-  win.matchMedia = () => mq;
+  win.matchMedia = (q) => (q === '(max-width: 700px)' ? { matches: narrow } : mq);
+  if (fetchImpl) {
+    win.fetch = fetchImpl;
+    win.URL = { createObjectURL: (b) => `blob:${b.from}` };
+  }
   let observerCb = null;
   if (intersection) {
     win.IntersectionObserver = function (cb) {
@@ -163,6 +171,29 @@ test('walk-in: switching to reduced motion mid-session turns scrub off', () => {
   assert.equal('controls' in s.walkVideo.attrs, true);
   assert.equal(s.activeIndex(), -1);
   assert.equal(s.win.listeners.scroll, undefined);
+});
+
+test('walk-in: fetches the desktop clip into memory so it stays seekable', async () => {
+  const urls = [];
+  const s = setup({ fetchImpl: (u) => (urls.push(u), Promise.resolve({ ok: true, blob: () => Promise.resolve({ from: u }) })) });
+  for (let i = 0; i < 5; i++) await Promise.resolve();
+  assert.deepEqual(urls, ['assets/media/walkin.mp4']);
+  assert.equal(s.walkVideo.src, 'blob:assets/media/walkin.mp4');
+  assert.equal(s.walkVideo.loadCalls, 0);
+});
+
+test('walk-in: narrow screens fetch the 480p clip', async () => {
+  const urls = [];
+  setup({ narrow: true, fetchImpl: (u) => (urls.push(u), Promise.resolve({ ok: true, blob: () => Promise.resolve({ from: u }) })) });
+  for (let i = 0; i < 5; i++) await Promise.resolve();
+  assert.deepEqual(urls, ['assets/media/walkin-480.mp4']);
+});
+
+test('walk-in: a failed fetch falls back to the normal video load', async () => {
+  const s = setup({ fetchImpl: () => Promise.resolve({ ok: false, status: 404 }) });
+  for (let i = 0; i < 5; i++) await Promise.resolve();
+  assert.equal(s.walkVideo.loadCalls, 1);
+  assert.equal(s.walkVideo.src, undefined);
 });
 
 // Work film band

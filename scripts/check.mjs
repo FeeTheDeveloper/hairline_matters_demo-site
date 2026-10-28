@@ -81,6 +81,7 @@ check('address slot shows pending text', /<dt>Address<\/dt>\s*<dd[^>]*>Published
 const headers = readFileSync(join(root, 'public', '_headers'), 'utf8');
 check('_headers sends X-Robots-Tag noindex for the demo path', /^\/hairline_matters_demo\/\*\n(?:\s+.+\n)*?\s+X-Robots-Tag: noindex/m.test(headers));
 check('_headers sets no long-lived cache on unhashed media', !/immutable|max-age=\d{5,}/.test(headers));
+check('CSP allows blob: media for the in-memory scrub clip', /media-src 'self' blob:/.test(headers));
 const wrangler = readFileSync(join(root, 'wrangler.jsonc'), 'utf8');
 check('wrangler serves ./public', /"directory":\s*"\.\/public"/.test(wrangler));
 check('wrangler routes ftdsitepreviews.com/hairline_matters_demo', /"pattern":\s*"ftdsitepreviews\.com\/hairline_matters_demo\*"/.test(wrangler));

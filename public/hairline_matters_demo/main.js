@@ -45,11 +45,38 @@
     }
   }
 
+  // Scrubbing needs a fully seekable file. The host does not answer byte-range
+  // requests, so fetch the clip once and play it from memory.
+  function loadSeekable() {
+    var sources = video.querySelectorAll('source');
+    var url = null;
+    for (var i = 0; i < sources.length && !url; i++) {
+      var media = sources[i].getAttribute('media');
+      if (!media || window.matchMedia(media).matches) url = sources[i].getAttribute('src');
+    }
+    if (!url || !window.fetch || !window.URL || !window.URL.createObjectURL) {
+      video.load();
+      return;
+    }
+    window
+      .fetch(url)
+      .then(function (res) {
+        if (!res.ok) throw new Error(res.status);
+        return res.blob();
+      })
+      .then(function (blob) {
+        video.src = window.URL.createObjectURL(blob);
+      })
+      .catch(function () {
+        video.load();
+      });
+  }
+
   function enable() {
     root.classList.add('scrub');
     video.removeAttribute('controls');
     video.preload = 'auto';
-    video.load();
+    loadSeekable();
     video.addEventListener('loadedmetadata', render);
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll);
